@@ -3,7 +3,6 @@ import { GoogleLogin } from "react-google-login";
 import { refreshTokenSetup } from "./utils";
 import { useHistory } from "react-router-dom";
 import { useGoogleLogin } from "react-google-login";
-import { Spin } from "antd";
 
 function Login({ updateAuthContext }) {
   let history = useHistory();
@@ -30,7 +29,7 @@ function Login({ updateAuthContext }) {
   return (
     <div style={{ paddingTop: 10 }}>
       {!loaded ? (
-        <Spin size="large" />
+        <></>
       ) : (
         <GoogleLogin
           clientId={process.env.REACT_APP_GOOGLE_API_KEY}
