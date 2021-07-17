@@ -1,86 +1,70 @@
-# React SaaS Template
-Remains of a SaaS business I once tried to build. Now transformed into a template for building an SaaS/admin application using React + Material-UI.
+# Getting Started with Create React App
 
-[**Check out the demo**](https://reactsaastemplate.com)
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-![Node.js CI](https://github.com/dunky11/react-saas-template/workflows/Node.js%20CI/badge.svg)
-[![Dependabot Status](https://api.dependabot.com/badges/status?host=github&repo=dunky11/react-saas-template)](https://dependabot.com)
-[![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
+## Available Scripts
 
-[<img src="/.github/gifs/showcase.gif">](https://reactsaastemplate.com "Go to demo website")
+In the project directory, you can run:
 
+### `yarn start`
 
-## Getting Started
+Runs the app in the development mode.\
+Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-### Prerequisites
+The page will reload if you make edits.\
+You will also see any lint errors in the console.
 
-#### Node.js 12+ (versions below could work, but are not tested)
+### `yarn test`
 
-* Linux:
+Launches the test runner in the interactive watch mode.\
+See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-   ```
-   sudo apt install nodejs npm
-   ```
+### `yarn build`
 
-* Windows or macOS:
+Builds the app for production to the `build` folder.\
+It correctly bundles React in production mode and optimizes the build for the best performance.
 
-   https://nodejs.org/en/
+The build is minified and the filenames include the hashes.\
+Your app is ready to be deployed!
 
-### Installing
+See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-1. Clone the repository
+### `yarn eject`
 
-   ```
-   git clone https://github.com/dunky11/react-saas-template
-   ```
-2. Install dependencies, this can take a minute
+**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
 
-   ```
-   cd react-saas-template
-   npm install
-   ```
-3. Start the local server
+If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-   ```
-   npm start
-   ```
+Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
 
-Your browser should now open and show the app. Otherwise open http://localhost:3000/ in your browser. Editing files will automatically refresh the page.
+You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
-### What to do next?
+## Learn More
 
-If you are new to React, you should watch a [basic React tutorial](https://www.youtube.com/results?search_query=react+tutorial) first.
+You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
-If you already know React, then most of the information you need is in the [Material-UI documentation](https://material-ui.com/getting-started/usage/).
+To learn React, check out the [React documentation](https://reactjs.org/).
 
-You can go into [src/theme.js](/src/theme.js) and change the primary and secondary color codes at the top of the script to the values you like and some magic will happen.
+### Code Splitting
 
-## Deployment
+This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
 
-If you are happy with the state of your website you can run:
+### Analyzing the Bundle Size
 
-```
-npm run build 
-```
+This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
 
-It will create a folder named build with your compiled project inside. After that copy its content into your webroot and you are ready to go.
+### Making a Progressive Web App
 
-## Build With
+This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
 
-* [Create-React-App](https://github.com/facebook/create-react-app) - Used to bootstrap the development
-* [Material-UI](https://github.com/mui-org/material-ui) - Material Design components
-* [React-Router](https://github.com/ReactTraining/react-router) - Routing of the app
-* [Pace](https://github.com/HubSpot/pace) - Loading bar at the top
-* [Emoji-Mart](https://github.com/missive/emoji-mart) - Picker for the emojis
-* [React-Dropzone](https://github.com/react-dropzone/react-dropzone) - File drop component for uploads
-* [Recharts](https://github.com/recharts/recharts) - Charting library I used for the statistics
-* [Aos](https://github.com/michalsnik/aos) - Animations based on viewport
-* [React-Cropper](https://github.com/roadmanfong/react-cropper) - Cropper for the image uploads
-* [React-Stripe-js](https://github.com/stripe/react-stripe-js) - Stripes payment elements
+### Advanced Configuration
 
-## Contribute
-Show your support by ⭐ the project. Pull requests are always welcome.
+This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
 
-## License
+### Deployment
 
-This project is licensed under the MIT License - see the [LICENSE.md](https://github.com/dunky11/react-saas-template/blob/master/LICENSE) file for details.
+This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+
+### `yarn build` fails to minify
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
