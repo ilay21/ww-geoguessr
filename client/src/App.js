@@ -10,6 +10,9 @@ function App() {
     <StoresContext>
       <Router>
         <Switch>
+          <Route path={"/login"}>
+            <LoginPage />
+          </Route>
           <PrivateRoute>
             <div className="App">
               <header className="App-header">
@@ -28,9 +31,6 @@ function App() {
               </header>
             </div>
           </PrivateRoute>
-          <Route path={"/login"}>
-            <LoginPage />
-          </Route>
         </Switch>
       </Router>
     </StoresContext>
