@@ -10,7 +10,7 @@ function Login({ updateAuthContext }) {
     console.log("[Login Success] currentUser:", res);
     refreshTokenSetup(res);
     updateAuthContext({ type: "LOGIN", user: res });
-    history.push("/");
+    history.push("/leaders");
   };
   const onFailure = (res) => {
     console.log("[Login Failed] res:", res);

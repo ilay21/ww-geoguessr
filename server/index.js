@@ -1,42 +1,45 @@
-const express = require('express');
-const path = require('path');
-const cluster = require('cluster');
-const numCPUs = require('os').cpus().length;
+require("dotenv").config();
+const { ApolloServer } = require("apollo-server");
+const { verify } = require("./utils/auth.utility");
+const mongoose = require("mongoose");
 
-const isDev = process.env.NODE_ENV !== 'production';
-const PORT = process.env.PORT || 5000;
+const { DB_PREFIX, DB_CONNECTION_STRING, DB_USER, DB_PASS } = process.env;
 
-// Multi-process to utilize all CPU cores.
-if (!isDev && cluster.isMaster) {
-    console.error(`Node cluster master ${process.pid} is running`);
+mongoose.connect(`${DB_PREFIX}${DB_USER}:${DB_PASS}${DB_CONNECTION_STRING}`, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
 
-    // Fork workers.
-    for (let i = 0; i < numCPUs; i++) {
-        cluster.fork();
-    }
+const db = mongoose.connection;
+db.on("error", console.error.bind(console, "connection error:"));
+db.once("open", function () {
+  const typeDefs = require("./schema/types");
+  const resolvers = require("./schema/resolvers");
 
-    cluster.on('exit', (worker, code, signal) => {
-        console.error(`Node cluster worker ${worker.process.pid} exited: code ${code}, signal ${signal}`);
-    });
+  const server = new ApolloServer({
+    typeDefs,
+    resolvers,
+    context: async ({ req }) => {
+      // Get the user token from the headers.
+      let token = "";
+      if (req.headers.authorization) {
+        token = req.headers.authorization.split(" ")[1];
+      }
 
-} else {
-    const app = express();
+      // Try to retrieve a user with the token
+      try {
+        const user = await verify(token);
+        if (user && user.email) {
+          return { user };
+        }
+      } catch (e) {
+        console.error(e);
+      }
+    },
+  });
 
-    // Priority serve any static files.
-    app.use(express.static(path.resolve(__dirname, '../client/build')));
-
-    // Answer API requests.
-    app.get('/api', function (req, res) {
-        res.set('Content-Type', 'application/json');
-        res.send('{"message":"Hello <username> :) from the custom server!"}');
-    });
-
-    // All remaining requests return the React app, so it can handle routing.
-    app.get('*', function(request, response) {
-        response.sendFile(path.resolve(__dirname, '../client/build', 'index.html'));
-    });
-
-    app.listen(PORT, function () {
-        console.error(`Node ${isDev ? 'dev server' : 'cluster worker '+process.pid}: listening on port ${PORT}`);
-    });
-}
+  // The `listen` method launches a web server.
+  server.listen().then(({ url }) => {
+    console.log(`🚀  Server ready at ${url}`);
+  });
+});

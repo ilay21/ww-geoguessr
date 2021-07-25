@@ -1,38 +1,26 @@
-import logo from "./logo.svg";
 import "./App.css";
 import StoresContext from "./stores";
-import PrivateRoute from "./components/PrivateRoute";
-import { Route, Switch, BrowserRouter as Router } from "react-router-dom";
+import { Route, Switch, HashRouter } from "react-router-dom";
 import LoginPage from "./LoginPage";
+import ApolloClientProvider from "./ApolloClientProvider";
+import AppRoutes from "./AppRoutes";
+import PrivateRoute from "./components/PrivateRoute";
 
 function App() {
   return (
     <StoresContext>
-      <Router>
+      <HashRouter>
         <Switch>
           <Route path={"/login"}>
             <LoginPage />
           </Route>
-          <PrivateRoute>
-            <div className="App">
-              <header className="App-header">
-                <img src={logo} className="App-logo" alt="logo" />
-                <p>
-                  Edit <code>src/App.js</code> and save to reload.
-                </p>
-                <a
-                  className="App-link"
-                  href="https://reactjs.org"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Learn React
-                </a>
-              </header>
-            </div>
+          <PrivateRoute path={"/"}>
+            <ApolloClientProvider>
+              <AppRoutes />
+            </ApolloClientProvider>
           </PrivateRoute>
         </Switch>
-      </Router>
+      </HashRouter>
     </StoresContext>
   );
 }
