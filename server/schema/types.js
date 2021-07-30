@@ -8,6 +8,15 @@ module.exports = gql`
     score: Int
   }
 
+  enum LoginOptionalStatuses {
+    SUCCESS
+    FAILURE
+  }
+
+  type LoginReponse {
+    status: LoginOptionalStatuses
+  }
+
   type GameScore {
     _id: ID
     url: String
@@ -18,5 +27,9 @@ module.exports = gql`
 
   type Query {
     allScores(category: String): [GameScore]
+  }
+
+  type Mutation {
+    login: LoginReponse
   }
 `;
