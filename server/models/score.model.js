@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const { Schema } = mongoose;
+const { Schema, Model } = mongoose;
 
 const scoreSchema = new Schema({
   _id: Schema.Types.ObjectId,
@@ -14,7 +14,7 @@ const scoreSchema = new Schema({
   ],
 });
 
-class ScoreClass {
+class ScoreClass extends Model {
   static getAll() {
     return this.find({}).lean();
   }

@@ -5,11 +5,16 @@ const userSchema = new Schema({
   email: String,
   ggUsername: String,
   ggPassword: String,
+  username: String,
 });
 
 class UserClass extends Model {
   static getUserByEmail(email) {
     return this.findOne({ email }).lean();
+  }
+
+  static getUsersByEmails(emails) {
+    return this.where("email").in(emails).lean();
   }
 
   static addUser(email) {

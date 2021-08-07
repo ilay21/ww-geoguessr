@@ -1,6 +1,6 @@
 import React from "react";
 import { useQuery } from "@apollo/client";
-import { GET_ALL_SCORES } from "../gql/queries/scores.queries";
+import { GET_ALL_SCORES } from "../gql/queries/score.queries";
 
 function LeadersPage() {
   const { loading, error, data } = useQuery(GET_ALL_SCORES, {

@@ -8,13 +8,14 @@ module.exports = gql`
     score: Int
   }
 
-  enum LoginOptionalStatuses {
+  enum MutationReponseStatuses {
     SUCCESS
     FAILURE
   }
 
-  type LoginReponse {
-    status: LoginOptionalStatuses
+  type MutationReponse {
+    status: MutationReponseStatuses
+    errors: [String]
   }
 
   type GameScore {
@@ -25,11 +26,21 @@ module.exports = gql`
     scores: [PlayerSingleScore]
   }
 
+  type Scoreboard {
+    _id: ID
+    title: String
+    owner: ID
+    gameScores: [ID]
+    members: [ID]
+  }
+
   type Query {
-    allScores(category: String): [GameScore]
+    allScores(category: String!): [GameScore]
+    getScoreboards: [Scoreboard!]
   }
 
   type Mutation {
-    login: LoginReponse
+    login: MutationReponse
+    createScoreboard(title: String!, emails: [String!]!): MutationReponse
   }
 `;

@@ -1,25 +1,33 @@
-import React, { useEffect } from "react";
-import { Switch, useRouteMatch } from "react-router-dom";
+import React, { useContext, useEffect } from "react";
+import { Switch, Route } from "react-router-dom";
 import PrivateRoute from "./components/PrivateRoute";
 import LeadersPage from "./components/Leaders.page";
 import { useMutation } from "@apollo/client";
 import { LOGIN } from "./gql/mutations/login.mutations";
+import { Grid } from "@material-ui/core";
+import { UserContext } from "./stores";
 
 function AppRoutes() {
   // The `path` lets us build <Route> paths that are
   // relative to the parent route, while the `url` lets
   // us build relative links.
-  const [mutateFunction, { data, loading, error }] = useMutation(LOGIN);
+  const [loginMutation, { data, loading, error }] = useMutation(LOGIN);
+  const [{ user }] = useContext(UserContext);
 
   useEffect(() => {
-    mutateFunction();
-  }, []);
+    if (user) {
+      loginMutation();
+    }
+  }, [user]);
 
-  let { path, url } = useRouteMatch();
   return (
     <Switch>
-      <PrivateRoute path={`${path}/`}>home</PrivateRoute>
-      <PrivateRoute path={`${path}/leaders`}>
+      <Route path={`/`}>
+        <Grid container style={{ height: "100vh" }}>
+          <Grid item xs></Grid>
+        </Grid>
+      </Route>
+      <PrivateRoute path={`/leaders`}>
         <LeadersPage />
       </PrivateRoute>
     </Switch>

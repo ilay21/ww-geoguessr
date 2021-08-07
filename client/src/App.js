@@ -7,7 +7,8 @@ import PrivateRoute from "./components/PrivateRoute";
 import { createTheme } from "@material-ui/core/styles";
 import { ThemeProvider } from "@material-ui/core";
 import { useState } from "react";
-import MainAppBar from "./components/MainAppBar";
+import AppWrapper from "./components/AppWrapper";
+import { SnackbarProvider } from "notistack";
 
 function App() {
   const [themeType, setThemeType] = useState("light");
@@ -22,14 +23,13 @@ function App() {
     <ThemeProvider theme={theme}>
       <StoresContext>
         <HashRouter>
-          <MainAppBar />
-          <Switch>
-            <PrivateRoute path={"/app"}>
-              <ApolloClientProvider>
+          <SnackbarProvider maxSnack={3}>
+            <ApolloClientProvider>
+              <AppWrapper setThemeType={setThemeType} themeType={themeType}>
                 <AppRoutes />
-              </ApolloClientProvider>
-            </PrivateRoute>
-          </Switch>
+              </AppWrapper>
+            </ApolloClientProvider>
+          </SnackbarProvider>
         </HashRouter>
       </StoresContext>
     </ThemeProvider>
