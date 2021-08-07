@@ -5,15 +5,9 @@ import {
   Toolbar,
   Typography,
   Switch,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
 } from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
-import HomeIcon from "@material-ui/icons/Home";
-import DashboardOutlinedIcon from "@material-ui/icons/DashboardOutlined";
 import AppDrawer from "./AppDrawer";
-import AddIcon from "@material-ui/icons/Add";
 import { makeStyles } from "@material-ui/core/styles";
 import { useContext, useState } from "react";
 import { UserContext } from "../stores";
@@ -33,9 +27,6 @@ const useStyles = makeStyles((theme) => ({
   },
   title: {
     flexGrow: 1,
-  },
-  nested: {
-    paddingLeft: theme.spacing(4),
   },
 }));
 
@@ -83,23 +74,6 @@ export default function AppWrapper({ themeType, setThemeType, children }) {
     onFailure: onLogoutFailure,
   });
 
-  const drawerList = [
-    {
-      text: "Home",
-      icon: <HomeIcon />,
-      callback: () => {
-        history.push("/");
-        setDrawerIsOpen(false);
-      },
-    },
-    {
-      text: "Create New Scoreboard",
-      icon: <AddIcon />,
-      callback: () => {
-        setIsAddScoreboardDialogOpen(true);
-      },
-    },
-  ];
   return (
     <>
       <AppBar position="static">
@@ -131,33 +105,18 @@ export default function AppWrapper({ themeType, setThemeType, children }) {
           </Button>
         </Toolbar>
         <AppDrawer
+          setIsAddScoreboardDialogOpen={setIsAddScoreboardDialogOpen}
+          setDrawerIsOpen={setDrawerIsOpen}
           key={"My Scoreboards"}
           open={drawerIsOpen}
           onClose={() => {
             setDrawerIsOpen(false);
-          }}
-          drawerList={drawerList}
-          renderListItem={({ text, icon, callback }) => {
-            return (
-              <ListItem button key={text} onClick={callback}>
-                <ListItemIcon>{icon}</ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItem>
-            );
           }}
           onMyScoreboardsClick={() => {
             setIsMyScoreboardsOpen(!isMyBoardsOpen);
           }}
           myBoardsOpen={isMyBoardsOpen}
           scoreboardsData={scoreboardsData}
-          renderMyScoreboardsListItem={(scoreboard) => (
-            <ListItem button className={classes.nested}>
-              <ListItemIcon>
-                <DashboardOutlinedIcon />
-              </ListItemIcon>
-              <ListItemText primary={scoreboard.title} />
-            </ListItem>
-          )}
         />
         <AddNewScoreboardDialog
           open={isAddScoreboardDialogOpen}

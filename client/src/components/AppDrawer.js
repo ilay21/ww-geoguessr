@@ -9,23 +9,78 @@ import {
 import DashboardIcon from "@material-ui/icons/Dashboard";
 import { ExpandLess, ExpandMore, StarBorder } from "@material-ui/icons";
 import * as PropTypes from "prop-types";
+import HomeIcon from "@material-ui/icons/Home";
+import AddIcon from "@material-ui/icons/Add";
+import DashboardOutlinedIcon from "@material-ui/icons/DashboardOutlined";
+import { useHistory } from "react-router-dom";
+import { makeStyles } from "@material-ui/core/styles";
 
-export default function AppDrawer(props) {
+const useStyles = makeStyles((theme) => ({
+  nested: {
+    paddingLeft: theme.spacing(4),
+  },
+}));
+
+export default function AppDrawer({
+  open,
+  onClose,
+  onMyScoreboardsClick,
+  myBoardsOpen,
+  scoreboardsData,
+  setDrawerIsOpen,
+  setIsAddScoreboardDialogOpen,
+}) {
+  let history = useHistory();
+  const classes = useStyles();
+  const drawerList = [
+    {
+      text: "Home",
+      icon: <HomeIcon />,
+      callback: () => {
+        history.push("/");
+        setDrawerIsOpen(false);
+      },
+    },
+    {
+      text: "Create New Scoreboard",
+      icon: <AddIcon />,
+      callback: () => {
+        setIsAddScoreboardDialogOpen(true);
+      },
+    },
+  ];
+  const renderListItem = ({ text, icon, callback }) => {
+    return (
+      <ListItem button key={text} onClick={callback}>
+        <ListItemIcon>{icon}</ListItemIcon>
+        <ListItemText primary={text} />
+      </ListItem>
+    );
+  };
+  const renderMyScoreboardsListItem = (scoreboard) => (
+    <ListItem button className={classes.nested}>
+      <ListItemIcon>
+        <DashboardOutlinedIcon />
+      </ListItemIcon>
+      <ListItemText primary={scoreboard.title} />
+    </ListItem>
+  );
+
   return (
-    <Drawer anchor={"left"} open={props.open} onClose={props.onClose}>
+    <Drawer anchor={"left"} open={open} onClose={onClose}>
       <List>
-        {props.drawerList.map(props.renderListItem)}
-        <ListItem button onClick={props.onMyScoreboardsClick}>
+        {drawerList.map(renderListItem)}
+        <ListItem button onClick={onMyScoreboardsClick}>
           <ListItemIcon>
             <DashboardIcon />
           </ListItemIcon>
           <ListItemText primary={"My Scoreboards"} />
-          {props.myBoardsOpen ? <ExpandLess /> : <ExpandMore />}
+          {myBoardsOpen ? <ExpandLess /> : <ExpandMore />}
         </ListItem>
-        <Collapse in={props.myBoardsOpen} timeout="auto" unmountOnExit>
+        <Collapse in={myBoardsOpen} timeout="auto" unmountOnExit>
           <List component="div" disablePadding>
-            {props.scoreboardsData &&
-              props.scoreboardsData.map(props.renderMyScoreboardsListItem)}
+            {scoreboardsData &&
+              scoreboardsData.map(renderMyScoreboardsListItem)}
           </List>
         </Collapse>
       </List>
