@@ -14,6 +14,8 @@ import AddIcon from "@material-ui/icons/Add";
 import DashboardOutlinedIcon from "@material-ui/icons/DashboardOutlined";
 import { useHistory } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
+import { useQuery } from "@apollo/client";
+import { GET_SCOREBOARDS } from "../gql/queries/scoreboard.queries";
 
 const useStyles = makeStyles((theme) => ({
   nested: {
@@ -26,12 +28,16 @@ export default function AppDrawer({
   onClose,
   onMyScoreboardsClick,
   myBoardsOpen,
-  scoreboardsData,
   setDrawerIsOpen,
   setIsAddScoreboardDialogOpen,
 }) {
   let history = useHistory();
   const classes = useStyles();
+  const {
+    loading,
+    error,
+    data: { getScoreboards: scoreboardsData } = {},
+  } = useQuery(GET_SCOREBOARDS);
   const drawerList = [
     {
       text: "Home",
@@ -44,14 +50,15 @@ export default function AppDrawer({
     {
       text: "Create New Scoreboard",
       icon: <AddIcon />,
+      disabled: scoreboardsData && scoreboardsData.length > 0,
       callback: () => {
         setIsAddScoreboardDialogOpen(true);
       },
     },
   ];
-  const renderListItem = ({ text, icon, callback }) => {
+  const renderListItem = ({ text, icon, callback, disabled }) => {
     return (
-      <ListItem button key={text} onClick={callback}>
+      <ListItem disabled={disabled} button key={text} onClick={callback}>
         <ListItemIcon>{icon}</ListItemIcon>
         <ListItemText primary={text} />
       </ListItem>

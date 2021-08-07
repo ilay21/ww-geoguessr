@@ -38,11 +38,6 @@ export default function AppWrapper({ themeType, setThemeType, children }) {
   const [isAddScoreboardDialogOpen, setIsAddScoreboardDialogOpen] =
     useState(false);
   let history = useHistory();
-  const {
-    loading,
-    error,
-    data: { getScoreboards: scoreboardsData } = {},
-  } = useQuery(GET_SCOREBOARDS);
 
   const onLoginSuccess = (res) => {
     console.log("[Login Success] currentUser:", res);
@@ -116,7 +111,6 @@ export default function AppWrapper({ themeType, setThemeType, children }) {
             setIsMyScoreboardsOpen(!isMyBoardsOpen);
           }}
           myBoardsOpen={isMyBoardsOpen}
-          scoreboardsData={scoreboardsData}
         />
         <AddNewScoreboardDialog
           open={isAddScoreboardDialogOpen}
