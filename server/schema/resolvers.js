@@ -1,8 +1,9 @@
-const { ApolloError } = require("apollo-server");
+const { ApolloError, ForbiddenError } = require("apollo-server");
 const { dateScalar } = require("../schema/custom-scalars");
 const ScoreModel = require("../models/score.model");
 const UserModel = require("../models/user.model");
 const ScoreboardModel = require("../models/scoreboard.model");
+const { getCredentials, getDataFromUrl } = require("../utils/ggScraper");
 
 const MUTATION_RESPONSE = {
   SUCCESS: "SUCCESS",
@@ -12,6 +13,20 @@ const MUTATION_RESPONSE = {
 module.exports = {
   Date: dateScalar,
   Query: {
+    async getUser(parent, args, context, info) {
+      if (!context.user) throw new ApolloError("no user found on context");
+      const dbUser = await UserModel.getUserByEmail(context.user.email);
+      const gotGgCredentials = Boolean(
+        dbUser.ggCredentials &&
+          dbUser.ggCredentials.email &&
+          dbUser.ggCredentials.password
+      );
+      delete dbUser.ggCredentials;
+      return {
+        ...dbUser,
+        gotGgCredentials,
+      };
+    },
     async allScores(parent, args, context, info) {
       if (!context.user) throw new ApolloError("no user found on context");
       return ScoreModel.getAll();
@@ -21,6 +36,11 @@ module.exports = {
 
       const { _id } = await UserModel.getUserByEmail(context.user.email);
       return ScoreboardModel.getScoreboardsByUser(_id);
+    },
+    async getScoreboardByTitle(parent, { scoreboardTitle }, context, info) {
+      if (!context.user) throw new ApolloError("no user found on context");
+
+      return ScoreboardModel.getScoreboardByTitle(scoreboardTitle);
     },
   },
   Mutation: {
@@ -54,6 +74,47 @@ module.exports = {
       return {
         status: MUTATION_RESPONSE.SUCCESS,
       };
+    },
+    async createScore(
+      parent,
+      {
+        url,
+        scoreboardId,
+        scoreboardTitle,
+        email: ggEmail,
+        password: ggPassword,
+      },
+      context
+    ) {
+      if (!context.user) {
+        throw new ApolloError("no user found on context");
+      }
+      let cred = await getCredentials(context, ggEmail, ggPassword);
+      const scores = await getDataFromUrl(url, cred);
+      const existingScore = await ScoreModel.getScoreByUrlAndScoreboard(
+        url,
+        scoreboardId
+      );
+
+      if (existingScore) {
+        return new ForbiddenError(
+          "Score with this URL already exists for this scoreboard"
+        );
+      }
+
+      const scoresAsList = Object.keys(scores).map((name) => ({
+        name,
+        score: scores[name],
+      }));
+
+      await ScoreModel.createScore(
+        scoresAsList,
+        url,
+        scoreboardId,
+        scoreboardTitle
+      );
+
+      return { status: MUTATION_RESPONSE.SUCCESS };
     },
   },
 };

@@ -3,8 +3,10 @@ const { Schema, Model } = mongoose;
 
 const userSchema = new Schema({
   email: String,
-  ggUsername: String,
-  ggPassword: String,
+  ggCredentials: {
+    email: String,
+    password: String,
+  },
   username: String,
 });
 

@@ -15,8 +15,8 @@ import { useGoogleLogin, useGoogleLogout } from "react-google-login";
 import { useHistory } from "react-router-dom";
 import { refreshTokenSetup } from "../utils";
 import AddNewScoreboardDialog from "./AddNewScoreboardDialog";
-import { useQuery } from "@apollo/client";
-import { GET_SCOREBOARDS } from "../gql/queries/scoreboard.queries";
+import { useLazyQuery } from "@apollo/client";
+import { GET_USER } from "../gql/queries/user.queries";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -32,16 +32,26 @@ const useStyles = makeStyles((theme) => ({
 
 export default function AppWrapper({ themeType, setThemeType, children }) {
   const classes = useStyles();
-  const [{ user }, dispatchUser] = useContext(UserContext);
+  const [{ user: userFromContext }, dispatchUser] = useContext(UserContext);
   const [drawerIsOpen, setDrawerIsOpen] = useState(false);
   const [isMyBoardsOpen, setIsMyScoreboardsOpen] = useState(false);
   const [isAddScoreboardDialogOpen, setIsAddScoreboardDialogOpen] =
     useState(false);
+  const [getUser, { loading, error, data: { getUser: userFromDB } = {} }] =
+    useLazyQuery(GET_USER);
   let history = useHistory();
+
+  if (userFromDB && !userFromContext?.initialized) {
+    dispatchUser({
+      type: "UPDATE_USER_DETAILS",
+      user: { ...userFromDB, initialized: true },
+    });
+  }
 
   const onLoginSuccess = (res) => {
     console.log("[Login Success] currentUser:", res);
     refreshTokenSetup(res);
+    getUser();
     dispatchUser({ type: "LOGIN", user: res });
     history.push("/");
   };
@@ -95,8 +105,8 @@ export default function AppWrapper({ themeType, setThemeType, children }) {
             }}
             inputProps={{ "aria-label": "secondary checkbox" }}
           />{" "}
-          <Button onClick={user ? signOut : signIn} color="inherit">
-            {user ? "logout" : "login with google"}
+          <Button onClick={userFromContext ? signOut : signIn} color="inherit">
+            {userFromContext ? "logout" : "login with google"}
           </Button>
         </Toolbar>
         <AppDrawer

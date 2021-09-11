@@ -21,7 +21,7 @@ function validateEmail(email) {
 export default function AddNewScoreboardDialog({ open, setOpen }) {
   const [emails, setEmails] = useState([]);
   const [title, setTitle] = useState("");
-  const [loginMutation, { data, loading, error }] =
+  const [createScoreboardMutation, { data, loading, error }] =
     useMutation(CREATE_SCOREBOARD);
   const { enqueueSnackbar } = useSnackbar();
 
@@ -45,7 +45,7 @@ export default function AddNewScoreboardDialog({ open, setOpen }) {
 
   const createScoreboard = async () => {
     try {
-      await loginMutation({ variables: { title, emails } });
+      await createScoreboardMutation({ variables: { title, emails } });
     } catch (e) {
       if (error) {
         enqueueSnackbar(error.message, {

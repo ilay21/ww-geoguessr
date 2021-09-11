@@ -5,22 +5,32 @@ import ApolloClientProvider from "./ApolloClientProvider";
 import AppRoutes from "./AppRoutes";
 import PrivateRoute from "./components/PrivateRoute";
 import { createTheme } from "@material-ui/core/styles";
-import { ThemeProvider } from "@material-ui/core";
-import { useState } from "react";
+import { CssBaseline, ThemeProvider } from "@material-ui/core";
+import { useState, useMemo } from "react";
 import AppWrapper from "./components/AppWrapper";
 import { SnackbarProvider } from "notistack";
 
 function App() {
   const [themeType, setThemeType] = useState("light");
+  useMemo(() => {}, []);
 
-  const theme = createTheme({
-    palette: {
-      type: themeType,
-    },
-  });
+  const theme = useMemo(
+    () =>
+      createTheme({
+        palette: {
+          type: themeType,
+          background: {
+            default: themeType === "light" ? "#e4f0e2" : "#e4f0e2",
+          },
+        },
+        contrastThreshold: 3,
+      }),
+    [themeType]
+  );
 
   return (
     <ThemeProvider theme={theme}>
+      <CssBaseline />
       <StoresContext>
         <HashRouter>
           <SnackbarProvider maxSnack={3}>

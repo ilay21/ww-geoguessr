@@ -11,7 +11,6 @@ const scoreboardSchema = new Schema({
   title: String,
   owner: ObjectId,
   members: [ObjectId],
-  gameScores: [ObjectId],
 });
 
 class ScoreboardClass extends Model {

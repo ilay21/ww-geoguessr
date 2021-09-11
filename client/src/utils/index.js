@@ -9,3 +9,9 @@ export const refreshTokenSetup = (res) => {
   };
   setTimeout(refreshToken, refreshTiming);
 };
+
+export const translateScoreboardTitleToUrl = (title) =>
+  title.replace(/ /g, "-");
+
+export const translateScoreboardTitleFromUrl = (title) =>
+  title.replace(/-/g, " ");

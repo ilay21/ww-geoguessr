@@ -7,7 +7,7 @@ import {
   Collapse,
 } from "@material-ui/core";
 import DashboardIcon from "@material-ui/icons/Dashboard";
-import { ExpandLess, ExpandMore, StarBorder } from "@material-ui/icons";
+import { ExpandLess, ExpandMore } from "@material-ui/icons";
 import * as PropTypes from "prop-types";
 import HomeIcon from "@material-ui/icons/Home";
 import AddIcon from "@material-ui/icons/Add";
@@ -16,6 +16,7 @@ import { useHistory } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import { useQuery } from "@apollo/client";
 import { GET_SCOREBOARDS } from "../gql/queries/scoreboard.queries";
+import { translateScoreboardTitleToUrl } from "../utils";
 
 const useStyles = makeStyles((theme) => ({
   nested: {
@@ -50,7 +51,7 @@ export default function AppDrawer({
     {
       text: "Create New Scoreboard",
       icon: <AddIcon />,
-      disabled: scoreboardsData && scoreboardsData.length > 0,
+      disabled: scoreboardsData && scoreboardsData.length > 4,
       callback: () => {
         setIsAddScoreboardDialogOpen(true);
       },
@@ -64,12 +65,19 @@ export default function AppDrawer({
       </ListItem>
     );
   };
-  const renderMyScoreboardsListItem = (scoreboard) => (
-    <ListItem button className={classes.nested}>
+  const renderMyScoreboardsListItem = ({ title }) => (
+    <ListItem
+      button
+      className={classes.nested}
+      onClick={() => {
+        history.push(`/my-boards/${translateScoreboardTitleToUrl(title)}`);
+        setDrawerIsOpen(false);
+      }}
+    >
       <ListItemIcon>
         <DashboardOutlinedIcon />
       </ListItemIcon>
-      <ListItemText primary={scoreboard.title} />
+      <ListItemText primary={title} />
     </ListItem>
   );
 
