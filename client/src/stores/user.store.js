@@ -6,7 +6,6 @@ const UserContext = createContext([{ user: null }, () => {}]);
 function reducer(state, action) {
   switch (action.type) {
     case "LOGIN":
-      console.log("login login");
       return {
         user: action.user,
       };

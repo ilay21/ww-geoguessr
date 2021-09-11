@@ -12,7 +12,6 @@ import { SnackbarProvider } from "notistack";
 
 function App() {
   const [themeType, setThemeType] = useState("light");
-  useMemo(() => {}, []);
 
   const theme = useMemo(
     () =>

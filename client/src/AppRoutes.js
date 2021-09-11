@@ -6,6 +6,7 @@ import { useMutation } from "@apollo/client";
 import { LOGIN } from "./gql/mutations/login.mutations";
 import { Grid } from "@material-ui/core";
 import { UserContext } from "./stores";
+import PrivacyPolicy from "./PrivacyPolicy";
 
 function AppRoutes() {
   // The `path` lets us build <Route> paths that are
@@ -25,6 +26,9 @@ function AppRoutes() {
       <PrivateRoute path={`/my-boards/:scoreboardTitle`}>
         <MyScoreboard />
       </PrivateRoute>
+      <Route path={"/privacy-policy"}>
+        <PrivacyPolicy />
+      </Route>
       <Route path={`/`}>
         <Grid container style={{ height: "100vh" }}>
           <Grid item xs></Grid>
