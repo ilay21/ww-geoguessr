@@ -5,18 +5,20 @@ import {
   Toolbar,
   Typography,
   Switch,
+  Chip,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import AppDrawer from "./AppDrawer";
 import { makeStyles } from "@mui/styles";
-import { useContext, useState } from "react";
-import { UserContext } from "../stores";
+import React, { useContext, useState } from "react";
+import { ScoreboardContext, UserContext } from "../stores";
 import { useGoogleLogin, useGoogleLogout } from "react-google-login";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { refreshTokenSetup } from "../utils";
 import AddNewScoreboardDialog from "./AddNewScoreboardDialog";
 import { useLazyQuery } from "@apollo/client";
 import { GET_USER } from "../gql/queries/user.queries";
+import DashboardOutlinedIcon from "@mui/icons-material/DashboardOutlined";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -40,6 +42,7 @@ export default function AppWrapper({ themeType, setThemeType, children }) {
   const [getUser, { loading, error, data: { getUser: userFromDB } = {} }] =
     useLazyQuery(GET_USER);
   let history = useHistory();
+  const [{ scoreboard }] = useContext(ScoreboardContext);
 
   if (userFromDB && !userFromContext?.initialized) {
     dispatchUser({
@@ -98,6 +101,17 @@ export default function AppWrapper({ themeType, setThemeType, children }) {
           <Typography variant="h6" className={classes.title}>
             GeoGuessr Dashboard
           </Typography>
+          {scoreboard?.title && (
+            <Chip
+              color="primary"
+              icon={<DashboardOutlinedIcon />}
+              label={
+                <Typography variant={"h6"}>
+                  "{scoreboard.title}" Scoreboard
+                </Typography>
+              }
+            />
+          )}
           <Switch
             checked={themeType === "dark"}
             onChange={() => {
