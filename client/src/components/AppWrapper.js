@@ -13,7 +13,7 @@ import { makeStyles } from "@mui/styles";
 import React, { useContext, useState } from "react";
 import { ScoreboardContext, UserContext } from "../stores";
 import { useGoogleLogin, useGoogleLogout } from "react-google-login";
-import { useHistory, useParams } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { refreshTokenSetup } from "../utils";
 import AddNewScoreboardDialog from "./AddNewScoreboardDialog";
 import { useLazyQuery } from "@apollo/client";
