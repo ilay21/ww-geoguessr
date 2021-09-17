@@ -8,16 +8,16 @@ import {
   InputBase,
   CircularProgress,
   Popover,
-} from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
-import PublishIcon from "@material-ui/icons/Publish";
+} from "@mui/material";
+import { makeStyles } from "@mui/styles";
+import PublishIcon from "@mui/icons-material/Publish";
 import GgCredentialsForm from "./GgCredentialsForm";
 import { UserContext } from "../stores";
 import { CREATE_SCORE } from "../gql/mutations/score.mutations";
 import { GET_SCOREBOARD_BY_TITLE } from "../gql/queries/scoreboard.queries";
 import { useParams } from "react-router-dom";
 import { useSnackbar } from "notistack";
-import { green } from "@material-ui/core/colors";
+import { green } from "@mui/material/colors";
 
 const useStyles = makeStyles((theme) => ({
   root: {

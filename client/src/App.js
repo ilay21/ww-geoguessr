@@ -4,8 +4,8 @@ import { Switch, HashRouter } from "react-router-dom";
 import ApolloClientProvider from "./ApolloClientProvider";
 import AppRoutes from "./AppRoutes";
 import PrivateRoute from "./components/PrivateRoute";
-import { createTheme } from "@material-ui/core/styles";
-import { CssBaseline, ThemeProvider } from "@material-ui/core";
+import { createTheme } from "@mui/material/styles";
+import { CssBaseline, ThemeProvider } from "@mui/material";
 import { useState, useMemo } from "react";
 import AppWrapper from "./components/AppWrapper";
 import { SnackbarProvider } from "notistack";
@@ -17,7 +17,7 @@ function App() {
     () =>
       createTheme({
         palette: {
-          type: themeType,
+          mode: themeType,
           background: {
             default: themeType === "light" ? "#e4f0e2" : "#e4f0e2",
           },

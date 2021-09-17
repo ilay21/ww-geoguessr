@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { useQuery } from "@apollo/client";
-import { GET_ALL_SCORES } from "../gql/queries/score.queries";
+import { GET_ALL_SCORES } from "../../gql/queries/score.queries";
 import { Grid, Paper } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import CreateNewScore from "./CreateNewScore";
+import CreateNewScore from "../CreateNewScore";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -23,8 +23,20 @@ function MyScoreboard() {
   });
   const classes = useStyles();
 
+  const [rangePickerOpen, setRangePickerOpen] = useState(true);
+  const [dateRange, setDateRange] = useState(null);
+
   if (loading) return "Loading...";
   if (error) return `Error! ${error}`;
+
+  const rangePickerToggle = () => {
+    setRangePickerOpen(!rangePickerOpen);
+  };
+
+  const rangePickerOnChange = (data) => {
+    console.log(data);
+  };
+
   return (
     <div className={classes.root}>
       <Grid
@@ -33,11 +45,15 @@ function MyScoreboard() {
         justifyContent={"space-around"}
         style={{ height: "100vh" }}
       >
-        <Grid item xs={12} justifyContent={"center"} alignContent={"center"}>
+        <Grid item xs={8} justifyContent={"center"} alignContent={"center"}>
           <CreateNewScore />
         </Grid>
+
+        <Grid item xs={4}>
+          <Paper></Paper>
+        </Grid>
         <Grid item xs={6}>
-          <Paper className={classes.paper}>xs=6</Paper>
+          <Paper className={classes.paper}></Paper>
         </Grid>
         <Grid item xs={6}>
           <Paper className={classes.paper}>xs=6</Paper>

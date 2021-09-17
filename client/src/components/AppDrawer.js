@@ -5,15 +5,15 @@ import {
   ListItemIcon,
   ListItemText,
   Collapse,
-} from "@material-ui/core";
-import DashboardIcon from "@material-ui/icons/Dashboard";
-import { ExpandLess, ExpandMore } from "@material-ui/icons";
+} from "@mui/material";
+import DashboardIcon from "@mui/icons-material/Dashboard";
+import { ExpandLess, ExpandMore } from "@mui/icons-material";
 import * as PropTypes from "prop-types";
-import HomeIcon from "@material-ui/icons/Home";
-import AddIcon from "@material-ui/icons/Add";
-import DashboardOutlinedIcon from "@material-ui/icons/DashboardOutlined";
+import HomeIcon from "@mui/icons-material/Home";
+import AddIcon from "@mui/icons-material/Add";
+import DashboardOutlinedIcon from "@mui/icons-material/DashboardOutlined";
 import { useHistory } from "react-router-dom";
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles } from "@mui/styles";
 import { useQuery } from "@apollo/client";
 import { GET_SCOREBOARDS } from "../gql/queries/scoreboard.queries";
 import { translateScoreboardTitleToUrl } from "../utils";

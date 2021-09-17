@@ -2,12 +2,12 @@ import React, { useEffect } from "react";
 // Modules
 import { useForm } from "react-hook-form";
 // MUI Core
-import Button from "@material-ui/core/Button";
-import Container from "@material-ui/core/Container";
-import Grid from "@material-ui/core/Grid";
-import TextField from "@material-ui/core/TextField";
-import { makeStyles } from "@material-ui/core/styles";
-import { Typography } from "@material-ui/core";
+import Button from "@mui/material/Button";
+import Container from "@mui/material/Container";
+import Grid from "@mui/material/Grid";
+import TextField from "@mui/material/TextField";
+import { makeStyles } from "@mui/styles";
+import { Typography } from "@mui/material";
 import { useSnackbar } from "notistack";
 import { ErrorMessage } from "@hookform/error-message";
 

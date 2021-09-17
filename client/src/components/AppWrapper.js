@@ -5,10 +5,10 @@ import {
   Toolbar,
   Typography,
   Switch,
-} from "@material-ui/core";
-import MenuIcon from "@material-ui/icons/Menu";
+} from "@mui/material";
+import MenuIcon from "@mui/icons-material/Menu";
 import AppDrawer from "./AppDrawer";
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles } from "@mui/styles";
 import { useContext, useState } from "react";
 import { UserContext } from "../stores";
 import { useGoogleLogin, useGoogleLogout } from "react-google-login";

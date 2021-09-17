@@ -1,10 +1,10 @@
 import React, { useContext, useEffect } from "react";
 import { Switch, Route } from "react-router-dom";
 import PrivateRoute from "./components/PrivateRoute";
-import MyScoreboard from "./components/MyScoreboard";
+import MyScoreboard from "./components/my-scoreboard/MyScoreboard";
 import { useMutation } from "@apollo/client";
 import { LOGIN } from "./gql/mutations/login.mutations";
-import { Grid } from "@material-ui/core";
+import { Grid } from "@mui/material";
 import { UserContext } from "./stores";
 import PrivacyPolicy from "./PrivacyPolicy";
 
