@@ -1,4 +1,4 @@
-const { ApolloError, ForbiddenError } = require("apollo-server");
+const { ApolloError, ForbiddenError } = require("apollo-server-express");
 const { dateScalar } = require("../schema/custom-scalars");
 const ScoreModel = require("../models/score.model");
 const UserModel = require("../models/user.model");

@@ -1,5 +1,5 @@
 const puppeteer = require("puppeteer");
-const { ApolloError } = require("apollo-server");
+const { ApolloError } = require("apollo-server-express");
 const UserModel = require("../models/user.model");
 //todo - move all selectors to constants dict
 
